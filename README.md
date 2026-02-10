@@ -47,29 +47,61 @@ python FD_topology.py
 - Window-robustness statistics
 
 **Usage**:
-```bash
+bash
 python FD_number_validation.py
+
 ---
 
 ### 2. `R3_stresstest_suite_v2.py` – No-Hiding and Detection Diagnostics (FD₃ / FD₂)
+**Purpose**: Implements the **R3 No-Hiding Stress Suite** to empirically validate the "Amplifier Mechanism."
+- **What it does**: 
+    - Injects controlled off-critical perturbations ($\varepsilon$) and adversarial phase noise.
+    - Measures detection rates to prove that deviations cannot be hidden by interference.
+    - Extracts the asymptotic scaling law of the detection threshold.
+- **Key Outputs**: 
+    - **Scaling Law**: Confirms $\varepsilon_{\min} \sim T^{-1}$ (observed $\approx T^{-0.933}$).
+    - **Cancellation Score**: Proves that noise cannot conceal energy shifts (Score $\approx 0.055$).
+- **Usage**: `python R3_stresstest_suite_v2.py`
 
-**Purpose**: Implements the **R3 No-Hiding Stress Suite**, empirically testing the amplifier mechanism and the "No-Hiding" principle.
+---
 
-**What it does**:
-- Injects controlled off-critical perturbations ($\varepsilon$) into windowed spectral signals
-- Conducts adversarial testing using phase noise to simulate destructive interference
-- Measures the detection sensitivity of the FD functional against naive energy-based methods
-- Auto-calibrates detection thresholds ($\tau$) based on baseline null-models
+### 3. `FD_topology.py` – Topological Stability and Winding Diagnostics (FD₁)
+**Purpose**: Probes the **topological layer** of the framework, linking spectral stability to geometric winding invariants.
+- **What it does**: 
+    - Maps the spectral signal into the complex plane to analyze its trajectory.
+    - Computes **normalized winding numbers** ($W$) as global invariants.
+    - Identifies the **Topological Bifurcation Point** where phase-locking collapses.
+- **Key Outputs**: 
+    - **Phase-Drift Diagrams**: Captures the discontinuous "radian-jump" ($> \pi$) at the detection limit.
+    - **Bifurcation Analysis**: Maps the transition from stable order to topological chaos.
+- **Usage**: `python FD_topology.py`
 
-**Key outputs**:
-- **Scaling Law Plots**: Empirically confirms $\varepsilon_{\min} \sim T^{-1}$ (observed $\approx T^{-0.93}$)
-- **Cancellation Scores**: Quantifies the inability of phase noise to conceal off-critical signals
-- **Detection Heatmaps**: Visualizes the phase transition from stability to detection
+---
 
-**Usage**:
-```bash
-python R3_stresstest_suite_v2.py
+## 📊 Summary of Empirical Evidence
 
+| Validation Pillar | Observed Metric | Framework Level | Status |
+| :--- | :--- | :--- | :--- |
+| **Structural** | Hermiticity $\approx 10^{-16}$ | FD₃ (Baseline) | ✅ Verified |
+| **Asymptotic** | Scaling $\alpha \approx -0.933$ | FD₂ (Dynamics) | ✅ Verified |
+| **Topological** | Phase Drift $> \pi$ | FD₁ (Structure) | ✅ Verified |
+
+---
+
+## 📖 Conceptual Mapping to the Paper
+
+The scripts in this repository provide the reproducibility unit for the manuscript **"The Weil Explicit Formula as a Statistical Amplifier"**:
+
+1. **Arithmetic → Logarithmic coordinates**: Handled by `FD_number_validation.py`.
+2. **Amplifier / No-Hiding (FD₃, FD₂)**: Validated by `R3_stresstest_suite_v2.py`.
+3. **Topological Rigidity (FD₁)**: Established by `FD_topology.py`.
+
+---
+
+## 📝 Disclaimer
+This repository implements a **diagnostic methodology**, not a standalone proof. It provides numerical, structural, and topological criteria whose uniform satisfaction is shown in the accompanying paper to be equivalent to spectral confinement to the critical line.
+
+---
 
 
 ---
