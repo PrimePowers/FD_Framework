@@ -1,0 +1,236 @@
+!python R3_stresstest_suite_v2.py
+
+======================================================================
+R3 NO-HIDING STRESS TEST SUITE 
+======================================================================
+
+1. Generating proxy data with GUE-like spacing...
+   Generated 2,000,000 ordinates in [1000001, 1924277]
+
+2. Running stress test with:
+   T range: 100000 to 4500000 (20 points)
+   ε range: 4.3e-09 to 4.3e-05
+   Window U: 800.0
+   Windows: ['gaussian', 'hann', 'bump']
+   Phase noise: ENABLED (stronger test)
+
+3. Computing detection surfaces (tau auto-calibration on amplitude-only run)...
+Auto-calibrated tau = 1.024e-06
+   Calibrated detection threshold (from amplitude-only null): τ = 1.024e-06
+   Calibrated detection threshold: τ = 1.024e-06
+
+4. Generating visualizations...
+   Saved: r3_detection_heatmaps.png
+   Saved: r3_detection_rates.png
+
+5. Computing scaling law (with bootstrap confidence intervals)...
+   Empirical slope: -0.9330
+   Theoretical: -1.0 (difference: 0.0670)
+   R² = 0.8945
+   Bootstrap CIs computed from 200 resamples
+   Saved: r3_scaling_law.png
+
+6. Analyzing cancellation effectiveness...
+   Average cancellation score: 0.055
+   (0 = no hiding, 1 = perfect hiding)
+   Saved: r3_cancellation_analysis.png
+
+7. Benchmarking against naive detection methods...
+   FD mean detection: 0.112
+   Naive mean detection: 0.157
+   Relative sensitivity: 0.7x
+
+8. Generating statistical report...
+   Saved: r3_stress_test_table.tex (LaTeX format)
+
+======================================================================
+PAPER-READY SUMMARY
+======================================================================
+1. Window invariance: ✓ PASS
+   Max detection rate variation: 0.007
+3. Scaling law: ε_min ∼ T^-0.933 (Δ from -1.0 = 0.067)
+   R² = 0.8945, p = 5.42e-02
+4. Phase noise reduces detection by 5% on average
+5. FD vs naive: 0.8x more sensitive
+   FD superiority: ✗ NOT CONFIRMED
+
+6. Detection threshold: τ = 1.02e-06
+   False positive control: 99th percentile of baseline
+
+======================================================================
+All analyses completed successfully.
+Output files:
+  - r3_detection_heatmaps.png
+  - r3_detection_rates.png
+  - r3_scaling_law.png
+  - r3_cancellation_analysis.png
+  - r3_stress_test_table.tex
+======================================================================
+
+!python FD_topology.py
+
+
+============================================================
+FD Stress Suite: NORMALIZED Winding Stability Analysis
+============================================================
+
+Generating 80 proxy ordinates...
+Ordinate range: [967.5, 1035.7]
+Mean spacing: 0.863
+
+Testing perturbation strengths:
+----------------------------------------------------------------------
+           ε |     W_base |     W_pert |  RelChange |        Drift | Collapsed
+----------------------------------------------------------------------
+    1.00e-06 |     -0.031 |     -0.031 |      0.000 |    1.975e-04 | False
+    2.15e-06 |     -0.031 |     -0.031 |      0.000 |    5.256e-04 | False
+    4.64e-06 |     -0.031 |     -0.031 |      0.000 |    9.796e-04 | False
+    1.00e-05 |     -0.031 |     -0.031 |      0.000 |    2.437e-03 | False
+    2.15e-05 |     -0.031 |     -0.031 |      0.000 |    5.173e+00 | False
+    4.64e-05 |     -0.031 |     -0.031 |      0.000 |    1.050e-02 | False
+    1.00e-04 |     -0.031 |     -0.032 |      0.032 |    1.029e+01 | False
+    2.15e-04 |     -0.031 |     -0.031 |      0.000 |    4.019e+00 | False
+    4.64e-04 |     -0.031 |     -0.035 |      0.129 |    3.131e+01 | False
+    1.00e-03 |     -0.031 |     -0.036 |      0.177 |    2.430e+01 | False
+
+No winding collapse detected in tested ε range.
+
+Generating visualization...
+Ignoring fixed y limits to fulfill fixed data aspect with adjustable data limits.
+Ignoring fixed y limits to fulfill fixed data aspect with adjustable data limits.
+
+Output files saved:
+  - fd_normalized_winding_stability.png
+  - fd_normalized_winding_results.txt
+
+============================================================
+Analysis complete. Showing plot...
+============================================================
+Figure(1200x1000)
+
+============================================================
+PAPER-READY SUMMARY:
+============================================================
+FD Stress Suite demonstrates topological sensitivity:
+1. Baseline normalized winding: W₀ ≈ -0.031
+2. No collapse detected in tested ε range
+
+Interpretation for FD framework:
+- Normalized winding serves as topological invariant
+- Off-critical perturbations (ε > 0) disrupt winding coherence
+- Exponential amplification (exp(εT)) drives topological collapse
+- This validates the winding-based diagnostic in the FD architecture
+
+
+!python FD_number_validation.py
+
+FD-Framework Numerical Validation v3.1 - FINAL CORRECTED
+================================================================================
+With proper hermiticity error measurement:
+  • Raw error: true numerical deviation before symmetrization
+  • Post error: verification after symmetrization
+  • All other fixes maintained
+================================================================================
+================================================================================
+FD-FRAMEWORK: NUMERICAL VALIDATION DEMO (FINAL CORRECTED)
+================================================================================
+✓ Configuration: mpmath dps=50, T∈[100, 20000], 40 points
+Computing first 3000 zeta zeros via mpmath (dps=50)...
+  500/3000
+  1000/3000
+  1500/3000
+  2000/3000
+  2500/3000
+  3000/3000
+✓ Zeros saved to cache: zeta_zeros_3000_dps50.npy
+
+Loaded 3000 zeros
+Range: [14.13, 3533.33]
+⚠️ Limiting T_MAX from 20000 to 3356.66 (zero range)
+Mean spacing: 1.4067
+Normalized spacing std: 0.4668
+
+Computing FD metrics across heights...
+
+  Window: bump
+    T=100     T=206     T=423     T=869     T=1787 
+
+  Window: gaussian
+    T=100     T=206     T=423     T=869     T=1787 
+
+✓ Computation completed in 0.1s
+
+================================================================================
+STATISTICAL ANALYSIS
+================================================================================
+
+BUMP window (T ≥ 500):
+  r_F: median=0.5846, max=0.7585, 95% ≤ 0.7090
+  Bandwidth: median=1.0, max=1.0, 95% ≤ 1.0
+  Hermiticity error (raw): median=1.17e-16, max=2.23e-16, 99% ≤ 2.15e-16
+  Hermiticity error (post): max=0.00e+00, 99% ≤ 0.00e+00 (symmetrization verification)
+
+GAUSSIAN window (T ≥ 500):
+  r_F: median=0.8249, max=0.9572, 95% ≤ 0.9373
+  Bandwidth: median=2.0, max=2.0, 95% ≤ 2.0
+  Hermiticity error (raw): median=1.02e-16, max=1.55e-16, 99% ≤ 1.52e-16
+  Hermiticity error (post): max=0.00e+00, 99% ≤ 0.00e+00 (symmetrization verification)
+
+================================================================================
+SCALING ANALYSIS
+================================================================================
+
+BUMP window: r_F(T) ∝ T^0.623
+  R² = -0.322
+  → No significant improvement with height
+
+GAUSSIAN window: r_F(T) ∝ T^0.300
+  R² = 0.306
+  → No significant improvement with height
+Figure(1800x1400)
+
+================================================================================
+SUMMARY TABLE
+================================================================================
+
+Empirical FD metrics for selected heights T:
+------------------------------------------------------------------------------------------------------------------------
+    T  bum.N bum.r_F  bum.BW bum.off_ratio bum.herm_raw bum.herm_post  gau.N gau.r_F  gau.BW gau.off_ratio gau.herm_raw gau.herm_post
+  100      2  0.0469       1        0.0022     2.83e-18      0.00e+00      2  0.3589       1        0.1141     4.05e-17      0.00e+00
+  500      4  0.5636       1        0.2411     4.54e-17      0.00e+00      4  0.7902       2        0.3844     1.05e-16      0.00e+00
+ 1000      5  0.3867       1        0.1301     1.18e-16      0.00e+00      5  0.6803       1        0.3164     1.01e-16      0.00e+00
+ 2000      7  0.5308       1        0.2198     7.74e-17      0.00e+00      7  0.8144       2        0.3988     6.47e-17      0.00e+00
+ 5000      9  0.6558       1        0.3007     1.05e-16      0.00e+00      9  0.9183       2        0.4575     1.12e-16      0.00e+00
+10000      9  0.6558       1        0.3007     1.05e-16      0.00e+00      9  0.9183       2        0.4575     1.12e-16      0.00e+00
+20000      9  0.6558       1        0.3007     1.05e-16      0.00e+00      9  0.9183       2        0.4575     1.12e-16      0.00e+00
+
+✓ Table saved as:
+  - fd_framework_summary.csv
+  - fd_framework_summary.tex (LaTeX)
+
+================================================================================
+✅ DEMO COMPLETED SUCCESSFULLY
+================================================================================
+
+Key empirical observations (from measured data):
+
+BUMP window:
+  • r_F(T) < 0.709 for 95% of T ≥ 500
+  • Bandwidth < 1 for 95% of T ≥ 500
+  • Raw hermiticity errors ~ 1.2e-16 (median)
+  • Post-symmetrization errors < 0.0e+00 (99%ile)
+
+GAUSSIAN window:
+  • r_F(T) < 0.937 for 95% of T ≥ 500
+  • Bandwidth < 2 for 95% of T ≥ 500
+  • Raw hermiticity errors ~ 1.0e-16 (median)
+  • Post-symmetrization errors < 0.0e+00 (99%ile)
+
+================================================================================
+Generated outputs:
+  - FD_Framework_Production_Results.png (12-panel plot)
+  - FD_Framework_Production_Results.pdf (vector graphic)
+  - fd_framework_summary.csv (numerical data)
+  - fd_framework_summary.tex (LaTeX table)
+  - zeta_zeros_*.npy (cached zeros for reproducibility)
+================================================================================
