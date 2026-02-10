@@ -69,24 +69,7 @@ python FD_number_validation.py
 ```bash
 python R3_stresstest_suite_v2.py
 
-### 1. `FD_number_validation.py` – Arithmetic-to-Spectral Validation
 
-**Purpose**: Validates the numerical pipeline from arithmetic data to finite spectral systems.
-
-**What it does**:
-- Constructs spectral objects from prime/proxy data in logarithmic coordinates
-- Applies window functions (Gaussian, Hann, bump) for localization
-- Measures diagonal dominance and spectral concentration
-- Provides consistency checks for the arithmetic → spectral transformation
-
-**Key outputs**:
-- Diagonal/off-diagonal energy ratios $r_F(T)$
-- Hermiticity error diagnostics
-- Window-robustness statistics
-
-**Usage**:
-```bash
-python FD_number_validation.py
 
 ---
 
